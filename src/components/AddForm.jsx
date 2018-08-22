@@ -7,7 +7,6 @@ class AddForm extends Component {
     }
 
     onCreate(event) {
-        event.preventDefault();
         const name = this.refs.name.value;
         const age = this.refs.age.value;
         const nickname = this.refs.nickname.value;
@@ -20,7 +19,9 @@ class AddForm extends Component {
             users.push({ name, age, nickname });
             localStorage.setItem('users', JSON.stringify(users));
         }
-        document.getElementById('myForm').reset();
+        this.refs.name.value = null;
+        this.refs.age.value = 1;
+        this.refs.nickname.value = null;
         this.props.updateState();
     }
 
@@ -30,17 +31,21 @@ class AddForm extends Component {
             ageItems.push(i);
         }
         return (
-            <form onSubmit={this.onCreate} ref="myForm" id="myForm">
-                <input type="text" ref="name" placeholder="name" className="formField" />&nbsp;
-                <select ref="age">
-                    {ageItems.map((item) => {
-                        return (<option value={item}>{item}</option>);
-                    })}
-                </select>&nbsp;
-                <input type="text" ref="nickname" placeholder="nick name" className="formField" /> &nbsp;
-                <button type="submit" value="Submit">Save</button> &nbsp;
-                <button type="button" onClick={this.props.onCancel}>Cancel</button>
-            </form>
+            <tr>
+                <td><input type="text" ref="name" placeholder="name" id="name" /></td>
+                <td>
+                    <select ref="age" id="age">
+                        {ageItems.map((item) => {
+                            return (<option value={item}>{item}</option>);
+                        })}
+                    </select>
+                </td>
+                <td><input type="text" ref="nickname" placeholder="nick name" id="nickname" /></td>
+                <td>
+                    <button type="button" onClick={this.onCreate}>Save</button>
+                    <button type="button" onClick={this.props.onCancel}>Cancel</button>
+                </td>
+            </tr>
         );
     }
 }

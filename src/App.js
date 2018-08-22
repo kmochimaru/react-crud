@@ -51,11 +51,12 @@ class App extends Component {
               </tr>
             </thead>
             <FetchUsers updateState={this.trigState} value={this.state.users} />
+            {this.state.isHidden && <AddForm updateState={this.trigState} onCancel={() => this.setHidden(false)} />}
+            <tfoot>
+              <br />
+              <button type="button" onClick={() => this.setHidden(true)}>Add</button>
+            </tfoot>
           </table>
-          <br /><br />
-          {this.state.isHidden && <AddForm updateState={this.trigState} onCancel={() => this.setHidden(false)} />}
-          <br />
-          <button type="button" onClick={() => this.setHidden(true)}>Add</button>
         </article>
       </div>
     );
